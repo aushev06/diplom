@@ -42,3 +42,15 @@ Route::post('/airlock/token', function (Request $request) {
         'token' => $token,
     ]);
 });
+
+Route::group(['middleware' => 'auth:airlock'], function () {
+    Route::get('/clients/list', 'ClientController@listClients');
+    Route::get('/foods/list', 'FoodController@foodList');
+    Route::resources([
+        'clients' => 'ClientController',
+        'foods'   => 'FoodController',
+        'orders'  => 'OrderController',
+    ]);
+
+    Route::get('/stats', 'OrderController@stats');
+});
