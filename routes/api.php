@@ -31,10 +31,10 @@ Route::post('/airlock/token', function (Request $request) {
 
     $user = User::where('email', $request->email)->first();
 
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
+    if (null === $user || !Hash::check($request->password, $user->password)) {
+        return response()->json([
+            'message' => 'The provided credentials are incorrect.',
+        ], 401);
     }
     $token = $user->createToken($request->device_name)->plainTextToken;
     return response()->json([
