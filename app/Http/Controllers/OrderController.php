@@ -147,7 +147,7 @@ class OrderController extends Controller
             $data = OrderFoods::selectRaw('foods.*, sum(count) as count')
                 ->leftJoin('orders', 'orders.id', '=', 'order_foods.order_id')
                 ->leftJoin('foods', 'foods.id', '=', 'order_foods.food_id')
-                ->where('foods.deleted_at', null)
+                ->whereNull('foods.deleted_at')
                 ->when($filter, function ($query) use ($filter) {
                     return $query->whereBetween(Order::ATTR_DATE_DELIVERY, $filter);
                 })
@@ -163,6 +163,7 @@ class OrderController extends Controller
                 ->when($filter, function ($query) use ($filter) {
                     return $query->whereBetween(Order::ATTR_DATE_DELIVERY, $filter);
                 })
+                ->whereNull('clients.deleted_at')
                 ->groupBy('orders.client_id')
                 ->orderByDesc($request->get('order') ?? 'count')
                 ->get()
