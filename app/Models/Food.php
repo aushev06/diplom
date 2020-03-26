@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Food
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Food extends Model
 {
+    use SoftDeletes;
+
     const ATTR_ID      = 'id';
     const ATTR_NAME    = 'name';
     const ATTR_PRICE   = 'price';
