@@ -15,6 +15,7 @@ use App\Models\Views\Order\OrderViewModel;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -39,7 +40,7 @@ class OrderController extends Controller
             $request->get('date_from', date("Y-m-d")),
             $request->get('date_to', date("Y-m-d", strtotime("2040-11-23")))
         ];
-
+        Log::info('tit', []);
         $orders = Order::distinct(Order::ATTR_DATE_DELIVERY)
             ->selectRaw("DATE_FORMAT(orders.date_delivery, '%d.%m.%Y') as 'key'")
             ->when($filter, function ($query) use ($filter) {
@@ -146,6 +147,7 @@ class OrderController extends Controller
             $data = OrderFoods::selectRaw('foods.*, sum(count) as count')
                 ->leftJoin('orders', 'orders.id', '=', 'order_foods.order_id')
                 ->leftJoin('foods', 'foods.id', '=', 'order_foods.food_id')
+                ->where('foods.deleted_at', null)
                 ->when($filter, function ($query) use ($filter) {
                     return $query->whereBetween(Order::ATTR_DATE_DELIVERY, $filter);
                 })
