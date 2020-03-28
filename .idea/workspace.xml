@@ -2,8 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91582b18-6f30-49ba-b017-9fdb8842133b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/my-app-laravel7.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/my-app-laravel7.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Food.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Food.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Example.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +27,13 @@
     <execution>
       <executable />
     </execution>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -117,6 +136,7 @@
       <path value="$PROJECT_DIR$/vendor/opis/closure" />
       <path value="$PROJECT_DIR$/vendor/dnoegel/php-xdg-base-dir" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/vendor/laravel/sanctum" />
     </include_path>
   </component>
   <component name="ProjectId" id="1YiNIukWhyo8W66jgjompPDDKOC" />
@@ -130,16 +150,16 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../olta" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\OSPanel\domains\my-app-laravel7\resources\js" />
       <recent name="E:\OSPanel\domains\my-app-laravel7\app\Http" />
       <recent name="E:\OSPanel\domains\my-app-laravel7\app" />
       <recent name="E:\OSPanel\domains\my-app-laravel7\app\Http\Controllers" />
       <recent name="E:\OSPanel\domains\my-app-laravel7\database\migrations" />
-      <recent name="E:\OSPanel\domains\my-app-laravel7" />
     </key>
   </component>
   <component name="RunManager">
@@ -175,7 +195,10 @@
       <workItem from="1585024912677" duration="1214000" />
       <workItem from="1585056995648" duration="1367000" />
       <workItem from="1585081911203" duration="22000" />
-      <workItem from="1585243228565" duration="2045000" />
+      <workItem from="1585243228565" duration="3188000" />
+      <workItem from="1585290615643" duration="101000" />
+      <workItem from="1585344251355" duration="1052000" />
+      <workItem from="1585413511719" duration="3106000" />
     </task>
     <servers />
   </component>
@@ -183,19 +206,24 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="278" key="FileChooserDialogImpl" timestamp="1585081930933">
+    <state x="740" y="278" key="FileChooserDialogImpl" timestamp="1585345577865">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="278" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1585081930933" />
+    <state x="740" y="278" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1585345577865" />
+    <state x="794" y="446" key="NewPhpFileDialog" timestamp="1585414971919">
+      <screen x="0" y="0" width="1920" height="1030" />
+    </state>
+    <state x="794" y="446" key="NewPhpFileDialog/1920.0.1536.824/0.0.1920.1030@0.0.1920.1030" timestamp="1585414971919" />
     <state x="531" y="236" key="run.anything.popup" timestamp="1584206890679">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1583436772919" />
     <state x="531" y="236" key="run.anything.popup/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1584206890679" />
-    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup" timestamp="1585246274195">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="539" y="181" width="840" height="848" key="search.everywhere.popup" timestamp="1585417128307">
+      <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1583572791199" />
-    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1585246274195" />
+    <state x="539" y="181" width="840" height="848" key="search.everywhere.popup/1920.0.1536.824/0.0.1920.1030@0.0.1920.1030" timestamp="1585417128307" />
+    <state x="539" y="183" width="840" height="856" key="search.everywhere.popup/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1585246600768" />
   </component>
 </project>
