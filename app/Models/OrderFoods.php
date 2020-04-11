@@ -30,4 +30,14 @@ class OrderFoods extends Model
         self::ATTR_UNIT,
         self::ATTR_COMMENT
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     *
+     * @author Aushev Ibra <aushevibra@yandex.ru>
+     */
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }
