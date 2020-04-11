@@ -25,6 +25,8 @@ class Food extends Model
 
     const TABLE_NAME = 'foods';
 
+
+
     public $fillable = [
         self::ATTR_NAME,
         self::ATTR_PRICE,
@@ -33,10 +35,20 @@ class Food extends Model
 
     protected $appends = [
         'image',
+        'letter',
     ];
 
     public function getImageAttribute()
     {
         return $this->attributes['image'] = ($this->img) ? url('storage/' . $this->img) : null;
+    }
+
+    /**
+     * @return string
+     *
+     * @author Aushev Ibra <aushevibra@yandex.ru>
+     */
+    public function getLetterAttribute() : string {
+        return mb_substr($this->name, 0, 1);
     }
 }

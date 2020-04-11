@@ -40,7 +40,6 @@ class OrderController extends Controller
             $request->get('date_from', date("Y-m-d")),
             $request->get('date_to', date("Y-m-d", strtotime("2040-11-23")))
         ];
-        Log::info('tit', []);
         $orders = Order::distinct(Order::ATTR_DATE_DELIVERY)
             ->selectRaw("DATE_FORMAT(orders.date_delivery, '%d.%m.%Y') as 'key'")
             ->when($filter, function ($query) use ($filter) {

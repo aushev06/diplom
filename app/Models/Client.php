@@ -36,8 +36,22 @@ class Client extends Model
         self::ATTR_ADDRESS
     ];
 
+    protected $appends = [
+        'letter'
+    ];
+
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+
+    /**
+     * @return string
+     *
+     * @author Aushev Ibra <aushevibra@yandex.ru>
+     */
+    public function getLetterAttribute() : string {
+        return mb_substr($this->name, 0, 1);
     }
 }
