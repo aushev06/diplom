@@ -58,7 +58,7 @@ class ClientController extends Controller
      */
     public function listClients(Request $request)
     {
-        $clients = Client::get();
+        $clients = Client::query()->where(Client::ATTR_USER_ID, auth()->id())->get();
 
         return response()->json($clients);
     }
