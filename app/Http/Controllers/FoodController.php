@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FoodRequest;
 use App\Models\Food;
 use App\Models\Views\Food\FoodViewModel;
+use App\Providers\AuthServiceProvider;
 use App\Services\FoodService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class FoodController extends Controller
 {
@@ -33,8 +35,11 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $response = Food::distinct('key')
+        $response = Food::
+        query()
+            ->distinct('key')
             ->selectRaw('SUBSTRING(name, 1, 1) as "key"')
+            ->where(Food::ATTR_USER_ID, auth()->id())
             ->get()
             ->map(function (Food $food) {
                 return new FoodViewModel($food);
@@ -46,7 +51,9 @@ class FoodController extends Controller
 
     public function foodList(Request $request)
     {
-        $foods = Food::get();
+        $foods = Food::query()
+            ->where(Food::ATTR_USER_ID, auth()->id())
+            ->get();
 
         return response()->json($foods);
     }
@@ -83,8 +90,11 @@ class FoodController extends Controller
     public function show($id)
     {
         $food = Food::findOrFail($id);
+        if (Gate::allows(AuthServiceProvider::ALLOW_IS_ME, $food)) {
+            return response()->json(['food' => $food]);
+        }
 
-        return response()->json(['food' => $food]);
+
     }
 
     /**
@@ -107,9 +117,12 @@ class FoodController extends Controller
      */
     public function update(FoodRequest $request, $id)
     {
-        $food = $this->service->save($request, $this->model->findOrFail($id));
+        $model = $this->model->findOrFail($id);
+        if (Gate::allows(AuthServiceProvider::ALLOW_IS_ME, $model)) {
+            $food = $this->service->save($request, $model);
+            return response()->json(['food' => $food]);
+        }
 
-        return response()->json(['food' => $food]);
     }
 
     /**
@@ -120,8 +133,12 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        Food::findOrFail($id)->delete();
+        $model = Food::findOrFail($id);
+        if (Gate::allows(AuthServiceProvider::ALLOW_IS_ME, $model)) {
+            $model->delete();
+            return response()->json(1);
+        }
 
-        return response()->json(1);
+
     }
 }

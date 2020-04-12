@@ -12,9 +12,11 @@ use App\Models\Views\ClientViewDataModel;
 use App\Models\Views\Food\FoodViewDataModel;
 use App\Models\Views\Food\FoodViewModel;
 use App\Models\Views\Order\OrderViewModel;
+use App\Providers\AuthServiceProvider;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
@@ -40,8 +42,10 @@ class OrderController extends Controller
             $request->get('date_from', date("Y-m-d")),
             $request->get('date_to', date("Y-m-d", strtotime("2040-11-23")))
         ];
-        $orders = Order::distinct(Order::ATTR_DATE_DELIVERY)
+        $orders = Order::query()
+            ->distinct(Order::ATTR_DATE_DELIVERY)
             ->selectRaw("DATE_FORMAT(orders.date_delivery, '%d.%m.%Y') as 'key'")
+            ->where(Order::ATTR_USER_ID, auth()->id())
             ->when($filter, function ($query) use ($filter) {
                 return $query->whereBetween(Order::ATTR_DATE_DELIVERY, $filter);
             })
@@ -90,9 +94,12 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::with(['client', 'foods'])->findOrFail($id);
+        $model = Order::with(['client', 'foods'])->findOrFail($id);
+        if (Gate::allows(AuthServiceProvider::ALLOW_IS_ME, $model)) {
+            return new OrderResource($model);
+        }
 
-        return new OrderResource($order);
+
     }
 
     /**
@@ -129,8 +136,12 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        Order::where(Order::ATTR_ID, $id)->delete();
-        OrderFoods::where(OrderFoods::ATTR_ORDER_ID, $id)->delete();
+        $model = Order::where(Order::ATTR_ID, $id);
+        if (Gate::allows(AuthServiceProvider::ALLOW_IS_ME, $model)) {
+            $model->delete();
+            OrderFoods::where(OrderFoods::ATTR_ORDER_ID, $id)->delete();
+        }
+
 
         return "";
     }
@@ -146,6 +157,7 @@ class OrderController extends Controller
             $data = OrderFoods::selectRaw('foods.*, sum(count) as count')
                 ->leftJoin('orders', 'orders.id', '=', 'order_foods.order_id')
                 ->leftJoin('foods', 'foods.id', '=', 'order_foods.food_id')
+                ->where('orders.user_id', auth()->id())
                 ->whereNull('foods.deleted_at')
                 ->when($filter, function ($query) use ($filter) {
                     return $query->whereBetween(Order::ATTR_DATE_DELIVERY, $filter);
@@ -162,6 +174,7 @@ class OrderController extends Controller
                 ->when($filter, function ($query) use ($filter) {
                     return $query->whereBetween(Order::ATTR_DATE_DELIVERY, $filter);
                 })
+                ->where('orders.user_id', auth()->id())
                 ->whereNull('clients.deleted_at')
                 ->groupBy('orders.client_id')
                 ->orderByDesc($request->get('order') ?? 'count')

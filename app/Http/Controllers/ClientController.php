@@ -6,9 +6,11 @@ use App\Http\Requests\ClientRequest;
 use App\Http\Resources\ClientCollection;
 use App\Models\Client;
 use App\Models\Views\ClientViewModel;
+use App\Providers\AuthServiceProvider;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ClientController extends Controller
 {
@@ -34,8 +36,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $response = Client::distinct('key')
+        $response = Client::query()
+            ->distinct('key')
             ->selectRaw('SUBSTRING(name, 1, 1) as "key"')
+            ->where(Client::ATTR_USER_ID, auth()->user()->id)
             ->get()
             ->map(function (Client $food) {
                 return new ClientViewModel($food);
@@ -91,9 +95,13 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        $client = Client::with(Client::WITH_ORDERS)->findOrFail($id);
+        $model = Client::with(Client::WITH_ORDERS)->findOrFail($id);
 
-        return response()->json(['client' => $client]);
+        if (Gate::allows(AuthServiceProvider::ALLOW_IS_ME, $model)) {
+            return response()->json(['client' => $model]);
+        }
+
+
     }
 
     /**
@@ -116,8 +124,13 @@ class ClientController extends Controller
      */
     public function update(ClientRequest $request, $id)
     {
-        $client = $this->service->save($request, $this->model->findOrFail($id));
-        return response()->json(['client' => $client]);
+        $model = $this->model->findOrFail($id);
+        if (Gate::allows(AuthServiceProvider::ALLOW_IS_ME, $model)) {
+            $client = $this->service->save($request, $model);
+            return response()->json(['client' => $client]);
+        }
+
+
     }
 
     /**
@@ -128,7 +141,13 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $this->model->findOrFail($id)->delete();
-        return response()->json(['status' => true]);
+
+        $model = $this->model->findOrFail($id);
+        if (Gate::allows(AuthServiceProvider::ALLOW_IS_ME, $model)) {
+            $model->delete();
+            return response()->json(['status' => true]);
+        }
+
+
     }
 }

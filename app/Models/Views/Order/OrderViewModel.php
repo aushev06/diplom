@@ -21,7 +21,10 @@ class OrderViewModel
     public function __construct($data)
     {
         $this->key = (new Carbon($data->key))->isoFormat("dddd, Do MMMM ");
-        $orders = Order::whereDate(Order::ATTR_DATE_DELIVERY,date('Y-m-d',  strtotime($data['key'])))->get();
+        $orders    = Order::query()
+            ->where(Order::ATTR_USER_ID, auth()->id())
+            ->whereDate(Order::ATTR_DATE_DELIVERY,
+                date('Y-m-d', strtotime($data['key'])))->get();
 
         foreach ($orders as $order) {
             $this->data[] = new OrderViewDataModel($order);

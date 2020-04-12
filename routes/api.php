@@ -44,13 +44,13 @@ Route::post('/airlock/token', function (Request $request) {
 });
 
 
-Route::middleware('auth:airlock')->post('/logout', function (Request $request) {
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
     $request->user()->tokens()->delete();
 
     return response('Loggedout', 200);
 });
 
-Route::group(['middleware' => 'auth:airlock'], function () {
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/clients/list', 'ClientController@listClients');
     Route::get('/foods/list', 'FoodController@foodList');
     Route::resources([

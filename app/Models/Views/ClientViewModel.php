@@ -21,7 +21,9 @@ class ClientViewModel
     {
         $this->key = $data->key;
 
-        $clients = Client::where(Client::ATTR_NAME, 'LIKE', $this->key . '%')->get();
+        $clients = Client::query()
+            ->where(Client::ATTR_USER_ID, auth()->user()->id)
+            ->where(Client::ATTR_NAME, 'LIKE', $this->key . '%')->get();
 
         foreach ($clients as $client) {
             $this->data[] = new ClientViewDataModel($client);

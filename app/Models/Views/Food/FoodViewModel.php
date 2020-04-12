@@ -22,7 +22,10 @@ class FoodViewModel
         $this->key = $data->key;
 
 
-        $foods = Food::where(Food::ATTR_NAME, 'LIKE', $this->key . '%')->get();
+        $foods = Food::
+        query()
+            ->where(Food::ATTR_USER_ID, auth()->id())
+            ->where(Food::ATTR_NAME, 'LIKE', $this->key . '%')->get();
 
         foreach ($foods as $food) {
             $this->data[] = new FoodViewDataModel($food);
