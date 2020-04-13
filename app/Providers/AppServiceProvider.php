@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Models\Client;
 use App\Models\Food;
+use App\Models\Order;
 use App\Observers\ClientObserver;
 use App\Observers\FoodObserver;
+use App\Observers\OrderObserver;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,5 +33,6 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Client::observe(ClientObserver::class);
         Food::observe(FoodObserver::class);
+        Order::observe(OrderObserver::class);
     }
 }
