@@ -122,10 +122,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Order::where(Order::ATTR_ID, $id)
-            ->update([
-                Order::ATTR_STATUS => $request->post('status')
-            ]);
+        /**
+         * @var Order $model
+         */
+        $model = Order::query()->findOrFail($id);
+
+        $model->delivery_type  = $request->post('delivery_type') ?? $model->delivery_type;
+        $model->status         = $request->post('status') ?? $model->status;
+        $model->payment_status = $request->post('payment_status') ?? $model->payment_status;
+
+        $model->save();
+
     }
 
     /**
