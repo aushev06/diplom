@@ -16,12 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 $path = explode('.', request()->path());
 
-dd($path);
 
-if (sizeof($path) === 1 && end($path) !== 'ru') {
+if (sizeof($path) === 1) {
     Route::get('{any}', function () {
         return view('main');
-    })->where('any', '=');
+    })->where('any', '.*');
     Auth::routes();
 }
 
