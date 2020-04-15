@@ -39,7 +39,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filter = [
-            $request->get('date_to', date("Y-m-d", time())),
+            $request->get('date_from', date("Y-m-d", time())),
             $request->get('date_to', date("Y-m-d", strtotime("2040-11-23")))
         ];
         $orders = Order::query()
