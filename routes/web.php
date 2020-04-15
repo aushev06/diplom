@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 $path = explode('.', request()->path());
 
+dd($path);
+
 if (sizeof($path) === 1 && end($path) !== 'ru') {
     Route::get('{any}', function () {
         return view('main');
