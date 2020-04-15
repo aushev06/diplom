@@ -14,10 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+$path = explode('.', request()->path());
+
+if (sizeof($path) === 1) {
+    Route::get('{any}', function () {
+        return view('main');
+    })->where('any', '=');
+    Auth::routes();
+}
 
 
-
-Route::get('{any}', function () {
-    return view('main');
-})->where('any', '.*');
-Auth::routes();
