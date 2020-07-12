@@ -31,6 +31,7 @@ class OrderService
 
         foreach ($request->post('cart') as $food) {
             $this->setProperty([
+                OrderFoods::ATTR_ID      => $food['id'] ?? null,
                 OrderFoods::ATTR_FOOD_ID => $food['foodID'],
                 OrderFoods::ATTR_COUNT   => $food['count'],
                 OrderFoods::ATTR_UNIT    => $food['unit'],
@@ -43,12 +44,10 @@ class OrderService
 
     public function setProperty(array $food, int $orderID)
     {
-        $orderFood = OrderFoods::firstOrCreate([
-            OrderFoods::ATTR_UNIT     => $food['unit'],
-            OrderFoods::ATTR_COUNT    => $food['count'],
-            OrderFoods::ATTR_ORDER_ID => $orderID,
-            OrderFoods::ATTR_FOOD_ID  => $food['food_id'],
-            OrderFoods::ATTR_COMMENT  => $food['comment'] ?? "",
-        ]);
+        $model = OrderFoods::query()->find($food['id']) ?? new OrderFoods();
+        $model->fill($food);
+        $model->order_id = $orderID;
+        Log::info('data', $model->getAttributes());
+        $model->save();
     }
 }

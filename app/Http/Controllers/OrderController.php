@@ -39,7 +39,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filter = [
-            $request->get('date_from', date("Y-m-d", time())), 
+            $request->get('date_from', date("Y-m-d", time())),
             $request->get('date_to', date("Y-m-d", strtotime("2040-11-23")))
         ];
         $orders = Order::query()
@@ -120,18 +120,17 @@ class OrderController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OrderRequest $request, Order $order)
     {
-        /**
-         * @var Order $model
-         */
-        $model = Order::query()->findOrFail($id);
-
-        $model->delivery_type  = $request->post('delivery_type') ?? $model->delivery_type;
-        $model->status         = $request->post('status') ?? $model->status;
-        $model->payment_status = $request->post('payment_status') ?? $model->payment_status;
-
-        $model->save();
+        if ($request->post('id')) {
+            $this->service->save($request, $order);
+        } else {
+            $order->delivery_type  = $request->post('delivery_type') ?? $order->delivery_type;
+            $order->status         = $request->post('status') ?? $order->status;
+            $order->payment_status = $request->post('payment_status') ?? $order->payment_status;
+            $order->save();
+        }
+        return new OrderResource($order);
 
     }
 

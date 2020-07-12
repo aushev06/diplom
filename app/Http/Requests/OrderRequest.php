@@ -24,13 +24,18 @@ class OrderRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            Order::ATTR_DATE_DELIVERY => 'required',
-            Order::ATTR_CLIENT_ID     => 'required',
-            'cart'                    => 'required',
-            'cart.*.count'            => ['required', 'min:1'],
-            'cart.*.unit'             => 'required',
-        ];
+        if ($this->post('id')) {
+            return [
+                Order::ATTR_DATE_DELIVERY => 'required',
+                Order::ATTR_CLIENT_ID     => 'required',
+                'cart'                    => 'required',
+                'cart.*.count'            => ['required', 'min:1'],
+                'cart.*.unit'             => 'required',
+            ];
+        }
+
+        return [];
+
     }
 
     public function messages()

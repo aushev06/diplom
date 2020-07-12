@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use SoftDeletes;
+
     const ATTR_ID             = 'id';
     const ATTR_NAME           = 'name';
     const ATTR_ADDRESS        = 'address';
@@ -74,9 +75,13 @@ class Order extends Model
 
     public function foods()
     {
-        return $this->belongsToMany(Food::class, 'order_foods')->withPivot([OrderFoods::ATTR_UNIT,
-                                                                            OrderFoods::ATTR_COUNT,
-                                                                            OrderFoods::ATTR_COMMENT]);
+        return $this->belongsToMany(Food::class, 'order_foods')
+            ->withPivot([
+                OrderFoods::ATTR_ID,
+                OrderFoods::ATTR_UNIT,
+                OrderFoods::ATTR_COUNT,
+                OrderFoods::ATTR_COMMENT
+            ]);
     }
 
     /**
